@@ -1,4 +1,4 @@
-export const g = 9.81; // m/s^2
+export const g = 9.81; 
 
 export function physicsFrom(v, deg) {
   const th = (deg * Math.PI) / 180;

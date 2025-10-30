@@ -39,11 +39,4 @@ export const models = {
     title: "Simple Pendulum",
     enabled: false,
   },
-
-  EXTRAKAOTIKUSRENDSZER: {
-    id: "EXTRAKAOTIKUSRENDSZER",
-    order: 3,
-    title: "EXTRAKAOTIKUSRENDSZER",
-    enabled: false,
-  },
 };

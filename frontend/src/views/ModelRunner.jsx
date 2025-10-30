@@ -51,7 +51,6 @@ export default function ModelRunner({ config, onBack }) {
       </div>
 
       <div className="shell">
-        {/* Left: Model-specific Form */}
         <div className="panel">
           <h2 style={{ margin: 0 }}>{title}</h2>
           <Form onSubmit={handleSubmit} />
@@ -62,7 +61,6 @@ export default function ModelRunner({ config, onBack }) {
           )}
         </div>
 
-        {/* Right: Generic controls + Model-specific Plot */}
         <div className="panel">
           <div
             style={{

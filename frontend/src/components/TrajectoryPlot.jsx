@@ -96,7 +96,6 @@ export default function TrajectoryPlot({ phys, ai, playing, onDone }) {
         Height y (m)
       </text>
 
-      {/* Curves */}
       {physPath && (
         <path d={physPath} stroke="#111827" strokeWidth={2} fill="none" />
       )}
@@ -110,13 +109,11 @@ export default function TrajectoryPlot({ phys, ai, playing, onDone }) {
         />
       )}
 
-      {/* Moving dots */}
       {physPos && (
         <circle cx={physPos[0]} cy={physPos[1]} r={6} fill="#111827" />
       )}
       {aiPos && <circle cx={aiPos[0]} cy={aiPos[1]} r={6} fill="#2563eb" />}
 
-      {/* Legend */}
       <g transform={`translate(${padding}, ${padding - 16})`}>
         <rect x={0} y={-12} width={240} height={26} fill="white" />
         <line x1={10} y1={2} x2={40} y2={2} stroke="#111827" strokeWidth={2} />

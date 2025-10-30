@@ -1,6 +1,7 @@
 import os
 import json
 import random
+import logging
 from dataclasses import dataclass, asdict
 
 import numpy as np
@@ -11,6 +12,12 @@ from backend.model_def import ProjectileNet
 from training.data import load_or_simulate_dataframe
 from training.prep import split_and_scale, make_loaders
 from training.eval import evaluate, plot_history
+
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+)
+logger = logging.getLogger(__name__)
 
 
 @dataclass
@@ -100,10 +107,10 @@ def train_model(model, loaders, cfg: Config, device):
             else:
                 epochs_no_improve += 1
             if epoch % 10 == 0 or epoch == 1:
-                print(f"[Epoch {epoch:4d}] train={train_loss:.6f} val={val_loss:.6f} (best @ {best_epoch}: {best_val:.6f})")
+                logger.info(f"Epoch {epoch:4d} - train_loss={train_loss:.6f} val_loss={val_loss:.6f} (best @ {best_epoch}: {best_val:.6f})")
 
             if epochs_no_improve >= cfg.patience:
-                print(f"[EarlyStopping] No improvement for {cfg.patience} epochs. Best val at epoch {best_epoch}.")
+                logger.info(f"Early stopping: No improvement for {cfg.patience} epochs. Best val at epoch {best_epoch}.")
                 break
 
     if os.path.exists(cfg.model_path):
@@ -115,7 +122,7 @@ def main():
     set_seed(cfg.seed)
 
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-    print(f"[INFO] Using device: {device}")
+    logger.info(f"Using device: {device}")
 
 
     df = load_or_simulate_dataframe(cfg.data_path)
@@ -147,12 +154,13 @@ def main():
     with open(cfg.metrics_path, "w") as f:
         json.dump(meta, f, indent=2)
 
-    print("[DONE] Best epoch:", best_epoch)
-    print(f"[ARTIFACT] Model: {cfg.model_path}")
-    print(f"[ARTIFACT] ScalerX: {cfg.scaler_x_path}")
-    print(f"[ARTIFACT] ScalerY: {cfg.scaler_y_path}")
-    print(f"[ARTIFACT] Metrics: {cfg.metrics_path}")
-    print(f"[ARTIFACT] Curve: {cfg.curve_png_path}")
+    logger.info(f"Training complete - Best epoch: {best_epoch}")
+    logger.info(f"Artifacts saved:")
+    logger.info(f"  Model: {cfg.model_path}")
+    logger.info(f"  ScalerX: {cfg.scaler_x_path}")
+    logger.info(f"  ScalerY: {cfg.scaler_y_path}")
+    logger.info(f"  Metrics: {cfg.metrics_path}")
+    logger.info(f"  Curve: {cfg.curve_png_path}")
 
 if __name__ == "__main__":
     main()
