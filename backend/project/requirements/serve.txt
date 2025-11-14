@@ -1,5 +1,4 @@
-torch
-flask
-flask-cors
-numpy
-joblib
+fastapi
+uvicorn[standard]
+pydantic-settings
+prometheus-client
