@@ -1,6 +1,6 @@
 import pytest
 import numpy as np
-from backend.app import _parse_single
+from backend.main import _parse_single
 
 
 def test_parse_single_dict_with_keys():
